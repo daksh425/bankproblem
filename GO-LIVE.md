@@ -20,29 +20,28 @@ Write a real name, a specific role, and a bio that says concretely why you can b
 trusted on Indian banking. If you have a LinkedIn, put it in `links` — that is
 what `sameAs` in the Person schema points at.
 
-### 2. Verify the circulars (half a day, and worth it)
+### 2. Circulars — verified 1 October 2026 ✅
 
-Seven articles are `type: guide` and each cites a real RBI instrument. I wrote
-them from a model's knowledge of those circulars, and **circulars get amended and
-superseded**.
+Checked against live sources. Three needed changes, now applied:
 
-Open each source URL in the frontmatter and confirm the rule still says what the
-page says. The instruments relied on:
-
-| Instrument | Used by |
+| Instrument | Status |
 | --- | --- |
-| Limiting Liability in Unauthorised Electronic Banking Transactions (6 Jul 2017) | the whole fraud silo |
-| Harmonisation of Turn Around Time for failed transactions (20 Sep 2019) | payments silo, compensation calculator |
-| Master Direction — Credit Card and Debit Card (21 Apr 2022) | cards silo |
-| Framework for delayed updation of credit information (26 Oct 2023) | credit-score silo |
-| Foreclosure charges on floating rate term loans (5 Jun 2012) | loans silo |
-| Penal charges on non-maintenance of minimum balance (20 Nov 2014) | accounts silo |
-| Reserve Bank — Integrated Ombudsman Scheme (12 Nov 2021) | escalation silo |
+| Unauthorised transactions (6 Jul 2017) | **In force until 31 Dec 2026.** Consolidated into RBI (Commercial Banks – Responsible Business Conduct) Directions, 2025. **Amendment Directions of 24 Jun 2026 apply from 1 Jan 2027** — pages updated with what changes |
+| Turn Around Time for failed transactions (20 Sep 2019) | Current, unchanged |
+| Credit Card and Debit Card Directions (21 Apr 2022) | Current. Mar 2024 amendment clarified ₹500 runs per **calendar** day — corrected |
+| Credit information compensation (26 Oct 2023) | **Superseded.** Now Master Direction – RBI (Credit Information Reporting) Directions, 2025. ₹100/day survives; citations updated |
+| Foreclosure charges (5 Jun 2012) | **Superseded.** Now RBI (Pre-payment Charges on Loans) Directions, 2025, for loans sanctioned/renewed from 1 Jan 2026 — broader scope, page rewritten |
+| Minimum balance penal charges (20 Nov 2014) | Consolidated into Responsible Business Conduct Directions, 2025; BSBD rules strengthened from 1 Apr 2026. Citations updated |
+| Integrated Ombudsman Scheme (12 Nov 2021) | **Not independently verified — do this.** No sign of replacement, but confirm at cms.rbi.org.in |
 
-Fix anything that has moved, then set `reviewed:` to today's date on those pages.
+**Two things still to do yourself:**
 
-The 33 `post` articles make fewer hard claims, but skim them too. Where a post
-states a number, it should match whatever the guide says.
+1. **Read the primary documents.** The details above came from law-firm and press summaries, not from the Directions themselves. Before launch, open the 2025 Pre-payment Directions and the June 2026 Amendment Directions on rbi.org.in and confirm the specifics — especially the compensation figures and dates in the fraud silo.
+2. **Verify the Ombudsman scheme** at cms.rbi.org.in.
+
+**Then set a recurring reminder.** The 1 January 2027 fraud changes mean the whole
+fraud silo needs rewriting before that date. Re-check every circular at least
+every six months; the editorial policy page commits you to it.
 
 ---
 
