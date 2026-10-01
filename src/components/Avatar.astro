@@ -1,0 +1,18 @@
+---
+import { paletteFor } from '@/lib/cover';
+interface Props { name: string; size?: number }
+const { name, size = 34 } = Astro.props;
+const initials = name
+  .replace(/[^\p{L}\s]/gu, '')
+  .split(/\s+/)
+  .filter(Boolean)
+  .slice(0, 2)
+  .map((w) => w[0]?.toUpperCase() ?? '')
+  .join('') || '?';
+const p = paletteFor(name);
+---
+<span
+  class="avatar"
+  aria-hidden="true"
+  style={`width:${size}px;height:${size}px;font-size:${size * 0.38}px;background:linear-gradient(140deg,${p.from},${p.to});color:${p.ink}`}
+>{initials}</span>

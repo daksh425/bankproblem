@@ -1,0 +1,55 @@
+---
+import type { GetStaticPaths } from 'astro';
+import { CATEGORIES, SITE, CATEGORY_MAP, type CategorySlug } from '@/config';
+import Base from '@/layouts/Base.astro';
+import Breadcrumbs from '@/components/Breadcrumbs.astro';
+import PostCard from '@/components/PostCard.astro';
+import Chips from '@/components/Chips.astro';
+import Pager from '@/components/Pager.astro';
+import { getProblemsByCategory, getCategoryCounts } from '@/lib/content';
+import { slicePage, PAGE_SIZE } from '@/lib/paginate';
+
+export const getStaticPaths = (async () => {
+  const paths = [];
+  for (const c of CATEGORIES) {
+    const items = await getProblemsByCategory(c.slug);
+    const last = Math.ceil(items.length / PAGE_SIZE);
+    for (let n = 2; n <= last; n++) {
+      paths.push({ params: { category: c.slug, n: String(n) }, props: { slug: c.slug, n } });
+    }
+  }
+  return paths;
+}) satisfies GetStaticPaths;
+
+const { slug, n } = Astro.props as { slug: CategorySlug; n: number };
+const cat = CATEGORY_MAP[slug];
+const all = await getProblemsByCategory(slug);
+const counts = await getCategoryCounts();
+const p = slicePage(all, n);
+const base = `/${slug}`;
+const path = `${base}/page/${n}`;
+---
+<Base
+  title={`${cat.heading} — page ${n}`}
+  description={cat.blurb}
+  path={path}
+  noindex
+>
+  <div class="shell" style="padding-block:1.5rem 3.5rem">
+    <Breadcrumbs items={[{ label: 'Blog', href: '/blog' }, { label: cat.name, href: base }, { label: `Page ${n}` }]} />
+    <header class="stack" style="gap:.9rem;margin:1.5rem 0 2rem;max-width:48rem">
+      <h1>{cat.heading}</h1>
+      <p class="muted">Page {n} of {p.last}</p>
+    </header>
+
+    <Chips counts={counts} active={slug} />
+
+    <div class="listhead" style="margin-top:1.75rem">
+      <p class="small muted num">Showing {p.start + 1}–{p.end} of {p.total}</p>
+    </div>
+    <div class="pgrid" style="margin-top:.75rem">
+      {p.items.map((post) => <PostCard post={post} />)}
+    </div>
+    <Pager current={p.current} last={p.last} base={base} pattern={`${base}/page/{n}`} />
+  </div>
+</Base>

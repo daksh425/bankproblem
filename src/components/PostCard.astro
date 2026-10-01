@@ -1,0 +1,30 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { Image } from 'astro:assets';
+import { CATEGORY_MAP } from '@/config';
+import Cover from '@/components/Cover.astro';
+
+interface Props { post: CollectionEntry<'problems'>; featured?: boolean }
+const { post, featured = false } = Astro.props;
+const d = post.data;
+const cat = CATEGORY_MAP[d.category];
+const href = `/${d.category}/${post.id}`;
+const date = d.published.toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' });
+---
+<article class={featured ? 'pcard featured' : 'pcard'}>
+  <a class="pcard-img" href={href} tabindex="-1" aria-hidden="true">
+    {d.cover ? (
+      <Image src={d.cover} alt="" width={featured ? 1000 : 600} height={featured ? 600 : 338} loading={featured ? 'eager' : 'lazy'} />
+    ) : (
+      <Cover title={d.title} slug={post.id} category={d.category} variant={featured ? 'hero' : 'card'} />
+    )}
+  </a>
+  <div class="pcard-body">
+    <div class="pcard-meta">
+      <a class="pill brandpill" href={`/${cat.slug}`}>{cat.name}</a>
+      <time datetime={d.published.toISOString().slice(0, 10)}>{date}</time>
+    </div>
+    <h3><a href={href}>{d.title}</a></h3>
+    <p>{d.description}</p>
+  </div>
+</article>

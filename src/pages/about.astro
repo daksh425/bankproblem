@@ -1,0 +1,58 @@
+---
+import { SITE } from '@/config';
+import Page from '@/layouts/Page.astro';
+---
+<Page
+  title={`About ${SITE.name}`}
+  description={`Why ${SITE.name} exists, how it is funded, and what it will and will not tell you.`}
+  path="/about"
+  lede="An independent guide to Indian banking problems, written for the person stuck on the phone with their bank."
+>
+  <h2>What this site is</h2>
+  <p>
+    Most pages you find when a bank transaction goes wrong are written by someone who wants to sell
+    you something: a bank explaining its own process, a fintech collecting a lead, an aggregator
+    chasing ad impressions. They tend to describe how things are meant to work, not what to do when
+    they do not.
+  </p>
+  <p>
+    {SITE.name} is written the other way round. Every page starts from a specific thing that has
+    gone wrong, states the rule that applies, and says what your actual options are — including when
+    the honest answer is that you have none and should escalate.
+  </p>
+
+  <h2>Where the information comes from</h2>
+  <p>
+    Rules come from primary sources: RBI circulars and master directions, NPCI procedural guidelines,
+    the Reserve Bank — Integrated Ombudsman Scheme, and the credit bureaus' own published policies.
+    Every page lists what it relied on, with dates, at the bottom. If we cannot cite it, we do not
+    claim it.
+  </p>
+  <p>
+    Where a rule is genuinely ambiguous or banks interpret it inconsistently, we say so rather than
+    picking the tidier answer.
+  </p>
+
+  <h2>How this is funded</h2>
+  <p>
+    Advertising, and affiliate commissions on some financial products. Pages carrying affiliate
+    links say so at the top, before you read anything. Advertisers and affiliate partners get no
+    say in what we write, and no page is written because a product pays well. Read the
+    <a href="/affiliate-disclosure">affiliate disclosure</a> and the
+    <a href="/editorial-policy">editorial policy</a> for the detail.
+  </p>
+
+  <h2>What this site is not</h2>
+  <p>
+    It is not financial, legal or tax advice, and it is not a substitute for talking to your bank or
+    a qualified professional about your specific situation. We are not affiliated with the Reserve
+    Bank of India, with any bank, or with any credit bureau. See the
+    <a href="/disclaimer">full disclaimer</a>.
+  </p>
+
+  <h2>Corrections</h2>
+  <p>
+    If something here is wrong or out of date, tell us at <a href="/contact">the contact page</a>.
+    Corrections to substantive errors are made at the top of the page in question, not quietly.
+  </p>
+</Page>

@@ -1,0 +1,21 @@
+---
+interface Props {
+  /** rule = an RBI/NPCI rule the reader can hold a bank to. */
+  type?: 'rule' | 'warn' | 'alert' | 'ok';
+  title?: string;
+  /** Short citation shown at the foot of the box. */
+  cite?: string;
+  citeUrl?: string;
+}
+const { type = 'rule', title, cite, citeUrl } = Astro.props;
+const defaults = { rule: 'The rule', warn: 'Watch out', alert: 'Deadline', ok: 'Good to know' };
+---
+<aside class={`callout ${type}`}>
+  <div class="eyebrow">{title ?? defaults[type]}</div>
+  <slot />
+  {cite && (
+    <div class="cite">
+      Source: {citeUrl ? <a href={citeUrl} rel="nofollow noopener" target="_blank">{cite}</a> : cite}
+    </div>
+  )}
+</aside>

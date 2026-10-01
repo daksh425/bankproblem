@@ -1,0 +1,86 @@
+---
+type: post
+title: "The bank says you were negligent: who actually has to prove it"
+seoTitle: "Bank says customer negligence: burden of proof"
+description: "Banks routinely assert negligence to avoid a refund. The RBI circular puts the burden on them, and asserting is not the same as proving."
+category: fraud
+question: "The bank says I was negligent in a fraud. Can they refuse my refund?"
+published: 2026-10-28
+author: editor
+volume: 1300
+tags: ["fraud", "negligence", "burden of proof"]
+related:
+  - unauthorised-transaction-bank-refund
+  - sim-swap-fraud-bank-liability
+  - rbi-ombudsman-how-to-file
+faqs:
+  - q: "What if I genuinely did share an OTP?"
+    a: "Then you bear the loss up to the point you report it — but only up to that point. Every transaction after your report is the bank's liability regardless of how the compromise started. Reporting fast protects you even when the mistake was yours."
+  - q: "Can I see the evidence the bank is relying on?"
+    a: "Ask for it in writing: the transaction logs, the device and IP records, and the basis on which negligence is alleged. A refusal to produce anything, while maintaining the allegation, is itself worth putting before the Ombudsman."
+---
+
+import Callout from '@/components/Callout.astro';
+
+"Customer negligence" is the sentence that ends most fraud claims. It is worth
+understanding exactly what it means and who has to establish it, because the
+answer is not what the call centre implies.
+
+## What the circular actually says
+
+<Callout type="rule" title="The burden rests with the bank" cite="RBI circular DBR.No.Leg.BC.78/09.07.005/2017-18, 6 July 2017" citeUrl="https://www.rbi.org.in/Scripts/NotificationUser.aspx?Id=11040">
+Where a customer disputes an electronic transaction, **the burden of proving
+customer liability rests with the bank**. Negligence is something the bank must
+establish, not something you must disprove.
+</Callout>
+
+There are three liability situations, and only one of them is about your conduct:
+
+- **Bank-side deficiency** — zero liability, whenever you report.
+- **Third-party breach, nobody at fault** — zero liability if reported within three working days, capped between ₹5,000 and ₹25,000 if reported within four to seven.
+- **Customer negligence** — you bear the loss, but **only until you report it**.
+
+## Asserting is not proving
+
+In practice banks conflate two different statements:
+
+> "Our logs show the correct credentials were used."
+
+> "The customer shared the credentials."
+
+The first is a fact about the bank's systems. The second is a claim about your
+behaviour, and it does not follow from the first. Credentials can be intercepted
+through a SIM swap, a compromised device, a hostile app, or a breach at a merchant
+— none of which is you being careless.
+
+When a bank gives you the first sentence as though it establishes the second, say
+so in writing. Ask what evidence it relies on to establish negligence specifically.
+
+<Callout type="warn" title="The part banks never mention">
+Even where negligence is established, your liability **stops at the moment you
+report**. Everything after that is the bank's, whatever happened before. If
+transactions continued after your complaint reference was issued, those are not
+arguable.
+</Callout>
+
+## What to put in writing
+
+- The **date and time you reported**, and the reference number.
+- A request for the **specific basis** on which negligence is alleged.
+- A request for the **transaction logs**, including device, IP and channel for each disputed transaction.
+- A reminder that under the circular the burden of proof sits with the bank.
+- A separate demand for the **10-working-day credit**, which is due on notification regardless of where the investigation lands.
+
+Keep it to a page.
+[The structure that gets past the template](/disputes/writing-a-bank-complaint-that-works).
+
+## Escalating
+
+Thirty days after the written complaint, the Ombudsman. Frame it precisely: not
+that the bank was unfair, but that it has alleged negligence without discharging
+the burden the circular places on it, and has withheld the credit the circular
+requires within 10 working days.
+
+That framing is admissible and adjudicable.
+[How to file](/disputes/rbi-ombudsman-how-to-file) ·
+[The liability bands in full](/fraud/unauthorised-transaction-bank-refund).

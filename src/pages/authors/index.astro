@@ -1,0 +1,34 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '@/layouts/Base.astro';
+import Breadcrumbs from '@/components/Breadcrumbs.astro';
+
+const authors = (await getCollection('authors')).sort((a, b) =>
+  a.data.name.localeCompare(b.data.name)
+);
+---
+<Base
+  title="Who writes this"
+  description="The people behind every page on this site, what they have actually done, and how to check them."
+  path="/authors"
+>
+  <div class="shell" style="padding-block:1.25rem 3.5rem">
+    <Breadcrumbs items={[{ label: 'Who writes this' }]} />
+    <header class="stack" style="gap:.8rem;margin:1.5rem 0 2rem;max-width:46rem">
+      <h1>Who writes this</h1>
+      <p class="muted" style="font-size:1.08rem">
+        Banking guidance is only worth as much as the person giving it. Everyone who writes or
+        reviews here is named, with what they have actually done and where you can check it.
+      </p>
+    </header>
+    <div class="grid two">
+      {authors.map((a) => (
+        <a class="cell" href={`/authors/${a.id}`}>
+          <h3>{a.data.name}</h3>
+          <p class="eyebrow">{a.data.role}</p>
+          <p>{a.data.bio}</p>
+        </a>
+      ))}
+    </div>
+  </div>
+</Base>

@@ -1,0 +1,27 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { CATEGORY_MAP } from '@/config';
+
+interface Props {
+  items: CollectionEntry<'problems'>[];
+  /** Show the category pill. Off on category hubs, where it is redundant. */
+  showCategory?: boolean;
+}
+const { items, showCategory = true } = Astro.props;
+---
+<ul class="plist">
+  {items.map((p) => (
+    <li>
+      <a href={`/${p.data.category}/${p.id}`}>
+        <span class="t">{p.data.title}</span>
+        <span class="d">{p.data.description}</span>
+        <span class="m">
+          {showCategory && <span class="pill">{CATEGORY_MAP[p.data.category].name}</span>}
+          <time datetime={p.data.updated.toISOString().slice(0, 10)}>
+            Updated {p.data.updated.toLocaleDateString('en-IN', { month: 'short', year: 'numeric' })}
+          </time>
+        </span>
+      </a>
+    </li>
+  ))}
+</ul>

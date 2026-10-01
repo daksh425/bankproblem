@@ -1,0 +1,185 @@
+---
+import { SITE } from '@/config';
+import Base from '@/layouts/Base.astro';
+import Breadcrumbs from '@/components/Breadcrumbs.astro';
+import AdSlot from '@/components/AdSlot.astro';
+
+const path = '/tools/credit-utilisation-calculator';
+const title = 'Credit utilisation calculator';
+const description =
+  'Work out the utilisation ratio lenders actually see, overall and on your worst single card, and what it is costing your score.';
+
+const schema = [
+  {
+    '@type': 'WebApplication',
+    name: title,
+    applicationCategory: 'FinanceApplication',
+    operatingSystem: 'Any',
+    url: new URL(path, SITE.url).href,
+    description,
+    offers: { '@type': 'Offer', price: '0', priceCurrency: 'INR' },
+    publisher: { '@id': `${SITE.url}/#org` },
+  },
+];
+---
+<Base title={title} description={description} path={path} schema={schema}>
+  <div class="shell" style="padding-block:1.25rem 3.5rem">
+    <Breadcrumbs items={[{ label: 'Tools', href: '/tools' }, { label: 'Credit utilisation' }]} />
+
+    <header class="stack" style="gap:.8rem;margin:1.5rem 0 2rem;max-width:48rem">
+      <h1>Credit utilisation calculator</h1>
+      <p class="muted" style="font-size:1.08rem">
+        Utilisation is the second-largest factor in most Indian scoring models after repayment
+        history. The part people miss: a single maxed-out card hurts even when the overall ratio
+        looks fine.
+      </p>
+    </header>
+
+    <div class="article-grid">
+      <div class="stack" style="gap:1.75rem">
+        <form id="util" class="callout" style="gap:1.1rem" novalidate>
+          <div class="eyebrow">Your cards</div>
+          <div id="rows" class="stack" style="gap:.7rem"></div>
+          <div class="btn-row">
+            <button type="button" class="btn ghost" id="add">Add a card</button>
+            <button type="submit" class="btn">Calculate</button>
+          </div>
+          <p class="small muted">Runs entirely in your browser. Nothing is stored or sent.</p>
+        </form>
+
+        <output id="result" for="util" hidden></output>
+
+        <AdSlot slot="" label="utilisation mid" />
+
+        <section class="stack" style="gap:.9rem">
+          <h2>What the number means</h2>
+          <div class="tablewrap">
+            <table>
+              <thead><tr><th scope="col">Overall utilisation</th><th scope="col">How a lender reads it</th></tr></thead>
+              <tbody>
+                <tr><th scope="row" class="n">Under 30%</th><td>Comfortable. No drag on your score from this factor.</td></tr>
+                <tr><th scope="row" class="n">30–50%</th><td>Noticeable. Usually the cheapest score improvement available to you.</td></tr>
+                <tr><th scope="row" class="n">50–75%</th><td>Material. Starts to affect pricing and limits on new applications.</td></tr>
+                <tr><th scope="row" class="n">Above 75%</th><td>Read as dependence on revolving credit. A common reason for rejection despite a clean repayment record.</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="muted">
+            Two things are worth knowing. Utilisation is calculated from the balance reported on your
+            statement date, not from what you owe today — so paying in full before the statement
+            generates, rather than before the due date, is what moves the number. And it carries no
+            memory: it is recalculated each month, so a bad month does not follow you the way a
+            missed payment does.
+          </p>
+          <p><a href="/credit-score">More on credit score problems &rarr;</a></p>
+        </section>
+      </div>
+
+      <aside class="aside">
+        <div class="callout" style="font-size:.86rem">
+          <div class="eyebrow">Related</div>
+          <ul style="padding-left:1.1rem;display:flex;flex-direction:column;gap:.5rem;margin-top:.3rem">
+            <li><a href="/credit-score/credit-report-error-dispute">Fixing a credit report error</a></li>
+            <li><a href="/cards/credit-card-closure-not-processed">Closing a card you do not use</a></li>
+          </ul>
+        </div>
+        <AdSlot slot="" label="utilisation sidebar" />
+      </aside>
+    </div>
+  </div>
+</Base>
+
+
+<script is:inline>
+  (function () {
+    var rows = document.getElementById('rows');
+    var form = document.getElementById('util');
+    var out = document.getElementById('result');
+    var addBtn = document.getElementById('add');
+    if (!rows || !form || !out || !addBtn) return;
+    var n = 0;
+
+    function addRow(limit, bal) {
+      n++;
+      var div = document.createElement('div');
+      div.className = 'cardrow';
+      div.innerHTML =
+        '<div><label for="l' + n + '">Card ' + n + ' limit (₹)</label>' +
+        '<input id="l' + n + '" type="number" min="0" step="1000" inputmode="numeric" value="' + (limit || '') + '" placeholder="100000"></div>' +
+        '<div><label for="b' + n + '">Statement balance (₹)</label>' +
+        '<input id="b' + n + '" type="number" min="0" step="100" inputmode="numeric" value="' + (bal || '') + '" placeholder="25000"></div>' +
+        '<button type="button" class=\"x\" aria-label="Remove card ' + n + '">×</button>';
+      div.querySelector('.x').addEventListener('click', function () {
+        if (rows.children.length > 1) div.remove();
+      });
+      rows.appendChild(div);
+    }
+
+    // Open in a usable state: two example cards, one of them the classic problem case.
+    addRow(200000, 30000);
+    addRow(50000, 42000);
+    addBtn.addEventListener('click', function () { addRow(); });
+
+    function pct(x) { return Math.round(x * 1000) / 10; }
+    function rupees(v) { return '₹' + v.toLocaleString('en-IN'); }
+    function band(p) {
+      if (p < 30) return ['ok', 'Comfortable', 'No drag on your score from utilisation.'];
+      if (p < 50) return ['ok', 'Slightly high', 'Bringing this under 30% is usually the cheapest score improvement available.'];
+      if (p < 75) return ['warn', 'High', 'This is affecting the limits and pricing you are offered.'];
+      return ['alert', 'Very high', 'Read as dependence on revolving credit. A common cause of rejection despite clean repayment.'];
+    }
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var limits = 0, bals = 0, worst = null;
+      var kids = rows.querySelectorAll('.cardrow');
+      for (var i = 0; i < kids.length; i++) {
+        var inputs = kids[i].querySelectorAll('input');
+        var l = parseFloat(inputs[0].value) || 0;
+        var b = parseFloat(inputs[1].value) || 0;
+        if (l <= 0) continue;
+        limits += l; bals += b;
+        var r = b / l;
+        if (!worst || r > worst.r) worst = { r: r, i: i + 1, l: l, b: b };
+      }
+
+      if (limits === 0) {
+        out.hidden = false;
+        out.className = 'callout warn';
+        out.innerHTML = '<div class="eyebrow">Nothing to calculate</div><p>Enter at least one card limit.</p>';
+        return;
+      }
+
+      var overall = bals / limits;
+      var p = pct(overall);
+      var b = band(p);
+      var worstP = worst ? pct(worst.r) : 0;
+      var target = Math.max(0, Math.round(bals - limits * 0.3));
+
+      var html =
+        '<div class="eyebrow">Overall utilisation</div>' +
+        '<div class="big">' + p + '%</div>' +
+        '<div class="meter"><i style="width:' + Math.min(100, p) + '%"></i></div>' +
+        '<p><strong>' + b[1] + '.</strong> ' + b[2] + '</p>' +
+        '<dl class="kv" style="margin-top:.3rem">' +
+        '<dt>Total limit</dt><dd>' + rupees(limits) + '</dd>' +
+        '<dt>Total reported balance</dt><dd>' + rupees(bals) + '</dd>' +
+        '</dl>';
+
+      if (target > 0) {
+        html += '<p class="small">Pay down <strong>' + rupees(target) + '</strong> before your statement dates to bring overall utilisation under 30%.</p>';
+      }
+
+      if (worst && worstP >= 70 && kids.length > 1) {
+        html +=
+          '<div class="cite">Card ' + worst.i + ' alone is at <strong>' + worstP + '%</strong> (' +
+          rupees(worst.b) + ' of ' + rupees(worst.l) + '). Per-card utilisation is scored separately, ' +
+          'so one maxed card drags your score even when the overall figure looks fine. Clear that one first.</div>';
+      }
+
+      out.hidden = false;
+      out.className = 'callout ' + b[0];
+      out.innerHTML = html;
+    });
+  })();
+</script>

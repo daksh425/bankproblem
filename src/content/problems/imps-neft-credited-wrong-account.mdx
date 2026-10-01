@@ -1,0 +1,72 @@
+---
+type: post
+title: "Your IMPS or NEFT went to the wrong account number"
+seoTitle: "NEFT or IMPS sent to wrong account"
+description: "Transfers route on the account number, not the name you typed. What that means for getting it back, and the one check that would have caught it."
+category: payments
+question: "I entered the wrong account number in NEFT. Can the bank reverse it?"
+published: 2026-10-20
+author: editor
+volume: 3600
+tags: ["NEFT", "IMPS", "wrong transfer"]
+related:
+  - money-sent-to-wrong-upi-id
+  - upi-payment-failed-money-debited
+  - rbi-ombudsman-how-to-file
+faqs:
+  - q: "Does the name I entered not matter at all?"
+    a: "For routing, no. The transfer executes on the account number and IFSC. The name is carried as information and is not matched by the system, which is precisely why a single wrong digit sends money to a real stranger."
+  - q: "What if the account number does not exist?"
+    a: "Then the transfer fails and the money must come back to you — within T+1, with ₹100 a day beyond that. That is the good outcome. The hard case is a wrong number that happens to be a valid account."
+---
+
+import Callout from '@/components/Callout.astro';
+
+The uncomfortable fact underneath this: NEFT, IMPS and RTGS route on the account
+number and IFSC alone. The beneficiary name you typed is carried along as
+information and is not matched against anything.
+
+One wrong digit, landing on a real account, is a successful transfer to a stranger.
+
+## Which situation are you in
+
+**The account number was invalid.** The transfer fails and the amount must return
+to you within **T+1**, with ₹100 per day of compensation beyond that. Nothing to
+chase unless it is late.
+[The full turn-around-time rules](/payments/upi-payment-failed-money-debited).
+
+**The account number was valid but wrong.** The transfer succeeded. There is no
+automatic reversal and no compensation clock. This is the hard case and the rest
+of this page is about it.
+
+<Callout type="warn" title="A successful credit cannot be pulled back without consent">
+Your bank can ask the beneficiary's bank to approach its customer for permission
+to return the money. It cannot debit a stranger's account on your say-so, and
+neither can the receiving bank. The mechanism is a request, not a reversal.
+</Callout>
+
+## What to do, in order
+
+1. **Contact your bank the same day**, in writing, with the UTR or transaction reference, the date, amount, and the account number and IFSC you entered. Ask your bank to take the matter up with the beneficiary bank for consent to reverse. Get a complaint reference number.
+2. **Follow up in a week.** Ask specifically what the beneficiary bank has said. "We have raised it" is not an update.
+3. **Escalate at 30 days** to the grievance redressal officer, then the Ombudsman. The Ombudsman will not compel the stranger to return the money, but it will examine whether your bank followed the process it is supposed to follow. That is often where the delay actually sits. [How to file](/disputes/rbi-ombudsman-how-to-file).
+
+If the recipient refuses, the banking route ends. Money received without
+entitlement is recoverable as a civil matter, which is realistic for larger
+amounts and rarely worth it for small ones.
+
+## The check that prevents it
+
+Most banking apps now show the **beneficiary's registered name** after you enter
+the account number and IFSC, before you confirm. That lookup is the only
+verification in the entire flow.
+
+Read it. If it says a name you do not recognise, stop. And on any first transfer
+to a new payee, send ₹1 and confirm receipt before sending the rest.
+
+## If it was not a mistake
+
+If money left your account without you initiating the transfer, this is not a
+wrong-transfer problem at all. The liability rules there are far more favourable
+and the reporting deadline is three working days.
+[What the bank owes you for an unauthorised transaction](/fraud/unauthorised-transaction-bank-refund).

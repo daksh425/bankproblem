@@ -1,0 +1,79 @@
+---
+type: post
+title: "You cancelled the subscription and the card is still being charged"
+seoTitle: "Auto-debit continues after cancellation"
+description: "Cancelling with the merchant does not stop the mandate on your card. How to kill a recurring charge at the bank, and get the wrong ones reversed."
+category: cards
+question: "How do I stop a recurring payment on my credit card?"
+published: 2026-10-08
+author: editor
+volume: 3300
+tags: ["auto-debit", "mandate"]
+related:
+  - standing-instruction-not-cancelled
+  - unauthorised-transaction-bank-refund
+  - credit-card-closure-not-processed
+faqs:
+  - q: "Can my bank refuse to cancel a mandate?"
+    a: "No. A mandate exists on your card at your instruction and you are entitled to withdraw it. A bank that tells you to sort it out with the merchant is describing its preference, not your rights. Put the instruction in writing and keep the reference number."
+  - q: "What about charges that already went through?"
+    a: "If they were taken after you validly cancelled, dispute them as unauthorised transactions. If they were taken before, that is a refund matter with the merchant."
+---
+
+import Callout from '@/components/Callout.astro';
+
+Cancelling a subscription inside an app and cancelling the payment mandate on
+your card are two different actions. People do the first, assume it did the
+second, and keep getting charged.
+
+## Three places a recurring charge can live
+
+**A card-on-file mandate with the merchant.** The merchant holds your card
+details and charges them on a schedule. Cancelling in the app should stop it. Often
+it does not, because the cancellation closed the service and left the billing
+agreement alone.
+
+**An e-mandate registered through your bank.** Under the recurring payments
+framework, mandates above the threshold require you to approve each debit, and
+every e-mandate carries a pre-debit notification. These you can see and cancel in
+your bank's app or net banking, usually under "manage mandates".
+
+**A standing instruction on an account** rather than a card.
+[That is a slightly different problem](/payments/standing-instruction-not-cancelled).
+
+## Cancel it at the bank, not just the merchant
+
+This is the step people skip. Go to your card issuer's app or net banking, find
+the registered mandates list, and revoke the one you want gone. If you cannot
+find it, call and ask for the mandate to be cancelled, and insist on a service
+request number.
+
+<Callout type="rule" title="You can withdraw a mandate at any time">
+A mandate is your instruction to your bank. You are entitled to withdraw it, and
+the bank must act on the withdrawal. "Contact the merchant" is not an answer to a
+cancellation request made to your bank.
+</Callout>
+
+Then tell the merchant in writing as well, so there is no argument later about
+whether you cancelled the service.
+
+## If charges went through after you cancelled
+
+A debit taken after a valid cancellation is not a billing dispute with the
+merchant. It is an unauthorised transaction on your card, and the rules there are
+much more favourable to you.
+
+Report it to the bank promptly, in writing, with the date you cancelled and the
+reference number. Reporting within **three working days** of noticing matters: it
+is the difference between zero liability and a capped loss.
+[The full liability rules and the 10-working-day credit](/fraud/unauthorised-transaction-bank-refund).
+
+## The thing not to do
+
+Do not close the card to stop a charge. It is a real tactic people reach for and
+it causes two new problems: a closed card can still have charges routed to its
+replacement through the card network's updater service, and closing a card hurts
+your utilisation and account age.
+[Why that costs you score](/credit-score/credit-score-dropped-after-closing-card).
+
+Kill the mandate instead. It is the clean fix.

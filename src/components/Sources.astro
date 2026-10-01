@@ -1,0 +1,22 @@
+---
+interface Source { label: string; url: string; issuer?: string; dated?: Date }
+interface Props { items: Source[] }
+const { items } = Astro.props;
+const fmt = (d?: Date) =>
+  d ? d.toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' }) : null;
+---
+<section class="sources" aria-labelledby="src-h">
+  <h2 id="src-h" style="font-size:.95rem">Sources</h2>
+  <ol>
+    {items.map((s) => (
+      <li>
+        <a href={s.url} rel="nofollow noopener" target="_blank">{s.label}</a>
+        <span class="iss">{[s.issuer, fmt(s.dated)].filter(Boolean).join(' · ')}</span>
+      </li>
+    ))}
+  </ol>
+  <p class="small muted">
+    Rules change. If a circular has been superseded since this page was last reviewed,
+    the circular wins. Tell us at the contact page and we will fix it.
+  </p>
+</section>

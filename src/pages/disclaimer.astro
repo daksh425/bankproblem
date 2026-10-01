@@ -1,0 +1,64 @@
+---
+import { SITE } from '@/config';
+import Page from '@/layouts/Page.astro';
+---
+<Page
+  title="Disclaimer"
+  description={`${SITE.name} publishes general information about Indian banking rules. It is not financial, legal or tax advice.`}
+  path="/disclaimer"
+  lede="Read this before acting on anything here."
+>
+  <h2>This is information, not advice</h2>
+  <p>
+    Everything on {SITE.name} is general information about how Indian banking rules work. It is not
+    financial advice, legal advice, tax advice or investment advice, and it does not take account of
+    your particular circumstances. We are not your adviser and no relationship is created by your
+    reading this site.
+  </p>
+  <p>
+    Before acting on anything here, confirm it with your bank, or with a qualified professional —
+    a chartered accountant for tax, a lawyer for legal exposure, a SEBI-registered adviser for
+    investments.
+  </p>
+
+  <h2>Rules change</h2>
+  <p>
+    RBI circulars, NPCI procedures, bureau policies and bank terms change, sometimes with little
+    notice. We date every page and list its sources, but a page can be out of date between reviews.
+    <strong>Where this site and a current RBI circular disagree, the circular is correct.</strong>
+  </p>
+
+  <h2>Banks differ in practice</h2>
+  <p>
+    A rule that binds every bank is still applied inconsistently by individual branches and call
+    centres. Timelines here are what the rules require, not a promise about what your bank will do.
+  </p>
+
+  <h2>No affiliation</h2>
+  <p>
+    {SITE.name} is independent. We are not affiliated with, endorsed by, or acting for the Reserve
+    Bank of India, NPCI, any bank, any credit bureau or any government body. Names and trade marks
+    belong to their owners and are used only to identify the institution being discussed.
+  </p>
+
+  <h2>External links</h2>
+  <p>
+    We link to third-party sites, including official portals and commercial products. We do not
+    control them and are not responsible for their content, accuracy or privacy practices.
+  </p>
+
+  <h2>Limitation of liability</h2>
+  <p>
+    We work hard to be accurate and we correct errors when we learn of them. To the extent permitted
+    by law, we accept no liability for loss arising from reliance on this site. You act on this
+    information at your own risk.
+  </p>
+
+  <h2>Beware of impersonation</h2>
+  <p>
+    We will never telephone you, never ask for an OTP, account number, card number, PIN or password,
+    and never offer to recover your money for a fee. Anyone doing so while using our name is
+    committing fraud. Report it to <a href={`mailto:${SITE.email}`}>{SITE.email}</a> and to
+    <a href="https://cybercrime.gov.in" rel="nofollow noopener" target="_blank">cybercrime.gov.in</a>.
+  </p>
+</Page>

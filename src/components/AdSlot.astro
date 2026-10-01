@@ -1,0 +1,31 @@
+---
+import { SITE } from '@/config';
+
+interface Props {
+  /** AdSense ad unit slot id. */
+  slot?: string;
+  format?: string;
+  /** Where this unit sits, used only for the dev placeholder label. */
+  label?: string;
+}
+const { slot = '', format = 'auto', label = 'ad' } = Astro.props;
+
+const live = Boolean(SITE.adsenseClient && slot);
+const showPlaceholder = !live && import.meta.env.DEV;
+---
+{live && (
+  <aside class="adslot" aria-label="Advertisement">
+    <div class="lbl">Advertisement</div>
+    <ins
+      class="adsbygoogle"
+      style="display:block"
+      data-ad-client={SITE.adsenseClient}
+      data-ad-slot={slot}
+      data-ad-format={format}
+      data-full-width-responsive="true"></ins>
+    <script is:inline>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+  </aside>
+)}
+{showPlaceholder && (
+  <div class="adslot ph">ad slot &middot; {label} &middot; inactive until AdSense is approved</div>
+)}

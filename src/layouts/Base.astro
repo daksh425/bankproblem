@@ -1,0 +1,118 @@
+---
+import { SITE } from '@/config';
+import Header from '@/components/Header.astro';
+import Footer from '@/components/Footer.astro';
+import '@/styles/global.css';
+
+interface Props {
+  title: string;
+  description: string;
+  /** Path only, e.g. "/cards/credit-card-closure-not-processed". */
+  path: string;
+  ogType?: 'website' | 'article';
+  noindex?: boolean;
+  /** JSON-LD objects to embed. */
+  schema?: unknown[];
+}
+
+const { title, description, path, ogType = 'website', noindex = false, schema = [] } = Astro.props;
+
+const canonical = new URL(path, SITE.url).href;
+const fullTitle = path === '/' ? `${SITE.name} — ${SITE.tagline}` : `${title} | ${SITE.name}`;
+
+const org = {
+  '@type': 'Organization',
+  '@id': `${SITE.url}/#org`,
+  name: SITE.name,
+  url: SITE.url,
+  description: SITE.description,
+  email: SITE.email,
+  areaServed: { '@type': 'Country', name: 'India' },
+};
+
+const graph = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    org,
+    {
+      '@type': 'WebSite',
+      '@id': `${SITE.url}/#website`,
+      url: SITE.url,
+      name: SITE.name,
+      description: SITE.description,
+      publisher: { '@id': `${SITE.url}/#org` },
+      inLanguage: SITE.lang,
+    },
+    ...schema,
+  ],
+};
+---
+<!doctype html>
+<html lang={SITE.lang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    {noindex && <meta name="robots" content="noindex, follow" />}
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=Literata:opsz,wght@7..72,400;7..72,600;7..72,700&display=swap"
+    />
+
+    <meta property="og:site_name" content={SITE.name} />
+    <meta property="og:type" content={ogType} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:locale" content={SITE.locale} />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <link rel="alternate" type="application/rss+xml" title={SITE.name} href="/rss.xml" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+
+    {SITE.searchConsoleToken && (
+      <meta name="google-site-verification" content={SITE.searchConsoleToken} />
+    )}
+
+    <script is:inline>
+      // Set the theme before first paint so there is no flash.
+      try {
+        const t = localStorage.getItem('theme');
+        if (t === 'dark' || t === 'light') document.documentElement.dataset.theme = t;
+      } catch (e) {}
+    </script>
+
+    <script type="application/ld+json" set:html={JSON.stringify(graph)} />
+
+    {SITE.adsenseClient && (
+      <script
+        async
+        src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${SITE.adsenseClient}`}
+        crossorigin="anonymous"></script>
+    )}
+    {SITE.ga4Id && (
+      <>
+        <script async src={`https://www.googletagmanager.com/gtag/js?id=${SITE.ga4Id}`}></script>
+        <script is:inline define:vars={{ id: SITE.ga4Id }}>
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){ dataLayer.push(arguments); }
+          gtag('js', new Date());
+          gtag('config', id);
+        </script>
+      </>
+    )}
+  </head>
+  <body>
+    <a class="skip" href="#main">Skip to content</a>
+    <Header />
+    <main id="main">
+      <slot />
+    </main>
+    <Footer />
+  </body>
+</html>

@@ -1,0 +1,28 @@
+---
+import { SITE } from '@/config';
+interface Props {
+  heading?: string;
+  body?: string;
+  label?: string;
+  href?: string;
+}
+const {
+  heading = 'Work out what your bank owes you',
+  body = 'RBI sets a deadline for every failed transaction and ignored request. Miss it and the bank owes you a fixed amount per day.',
+  label = 'Open the calculator',
+  href = '/tools/bank-compensation-calculator',
+} = Astro.props;
+---
+<aside class="cta">
+  <div class="cta-icon" aria-hidden="true">
+    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="4" y="2" width="16" height="20" rx="2"></rect>
+      <path d="M8 6h8M8 11h3M8 15h3M15 11v5"></path>
+    </svg>
+  </div>
+  <div class="cta-text">
+    <strong>{heading}</strong>
+    <p>{body}</p>
+  </div>
+  <a class="btn" href={href}>{label}</a>
+</aside>

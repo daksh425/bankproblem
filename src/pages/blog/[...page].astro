@@ -1,0 +1,76 @@
+---
+import type { GetStaticPaths, Page } from 'astro';
+import type { CollectionEntry } from 'astro:content';
+import { SITE } from '@/config';
+import Base from '@/layouts/Base.astro';
+import PostCard from '@/components/PostCard.astro';
+import AdSlot from '@/components/AdSlot.astro';
+import Pager from '@/components/Pager.astro';
+import Chips from '@/components/Chips.astro';
+import { getProblems, getCategoryCounts } from '@/lib/content';
+
+export const getStaticPaths = (async ({ paginate }) => {
+  const posts = await getProblems();
+  return paginate(posts, { pageSize: 12 });
+}) satisfies GetStaticPaths;
+
+const { page } = Astro.props as { page: Page<CollectionEntry<'problems'>> };
+const counts = await getCategoryCounts();
+const first = page.currentPage === 1;
+const path = first ? '/blog' : `/blog/${page.currentPage}`;
+const total = page.total;
+
+const schema = [
+  {
+    '@type': 'Blog',
+    '@id': `${SITE.url}/blog#blog`,
+    name: `${SITE.name} blog`,
+    description: SITE.description,
+    url: new URL('/blog', SITE.url).href,
+    publisher: { '@id': `${SITE.url}/#org` },
+  },
+];
+
+const featured = first ? page.data[0] : undefined;
+const rest = first ? page.data.slice(1) : page.data;
+---
+<Base
+  title={first ? 'Blog' : `Blog — page ${page.currentPage}`}
+  description="Everyday Indian banking problems, explained with the rule that applies and the step that actually fixes it."
+  path={path}
+  noindex={!first}
+  schema={schema}
+>
+  <div class="shell" style="padding-block:2rem 3.5rem">
+    <header class="stack" style="gap:.9rem;max-width:48rem;margin-bottom:2rem">
+      <h1>Know exactly where <span class="hl">you stand</span></h1>
+      <p class="muted" style="font-size:1.08rem">
+        When a bank gets it wrong, there is almost always a rule that says so. We find the rule,
+        quote it, and tell you the exact step that fixes your problem — in plain language, with the
+        circular cited so you can check us.
+      </p>
+    </header>
+
+    {featured && (
+      <section style="margin-bottom:2.5rem">
+        <PostCard post={featured} featured />
+      </section>
+    )}
+
+    <div class="listhead">
+      <h2>{first ? 'More answers' : 'All articles'}</h2>
+      <p class="small muted num">
+        Showing {page.start + 1}–{page.end + 1} of {total} {total === 1 ? 'article' : 'articles'}
+      </p>
+    </div>
+
+    <Chips counts={counts} />
+
+    <div class="pgrid" style="margin-top:1.5rem">
+      {rest.map((p) => <PostCard post={p} />)}
+    </div>
+
+    <Pager current={page.currentPage} last={page.lastPage} base="/blog" pattern="/blog/{n}" />
+    <AdSlot slot="" label="blog foot" />
+  </div>
+</Base>

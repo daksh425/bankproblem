@@ -1,0 +1,36 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  author: CollectionEntry<'authors'>;
+  reviewer?: CollectionEntry<'authors'>;
+  published: Date;
+  updated: Date;
+  reviewed?: Date;
+}
+const { author, reviewer, published, updated, reviewed } = Astro.props;
+const fmt = (d: Date) =>
+  d.toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' });
+const iso = (d: Date) => d.toISOString().slice(0, 10);
+const changed = updated.getTime() !== published.getTime();
+---
+<div class="byline">
+  <span>By <a href={`/authors/${author.id}`}>{author.data.name}</a></span>
+  {reviewer && (
+    <>
+      <span class="sep" aria-hidden="true">|</span>
+      <span>Reviewed by <a href={`/authors/${reviewer.id}`}>{reviewer.data.name}</a></span>
+    </>
+  )}
+  <span class="sep" aria-hidden="true">|</span>
+  <span>
+    {changed ? 'Updated' : 'Published'}{' '}
+    <time datetime={iso(changed ? updated : published)}>{fmt(changed ? updated : published)}</time>
+  </span>
+  {reviewed && (
+    <>
+      <span class="sep" aria-hidden="true">|</span>
+      <span>Rules checked <time datetime={iso(reviewed)}>{fmt(reviewed)}</time></span>
+    </>
+  )}
+</div>

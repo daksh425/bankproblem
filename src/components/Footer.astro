@@ -1,0 +1,46 @@
+---
+import { SITE, CATEGORIES } from '@/config';
+const year = new Date().getFullYear();
+const half = Math.ceil(CATEGORIES.length / 2);
+---
+<footer class="site-footer">
+  <div class="shell">
+    <div class="cols">
+      <div>
+        <h4>Topics</h4>
+        <ul>
+          {CATEGORIES.slice(0, half).map((c) => <li><a href={`/${c.slug}`}>{c.heading}</a></li>)}
+        </ul>
+      </div>
+      <div>
+        <h4>More topics</h4>
+        <ul>
+          {CATEGORIES.slice(half).map((c) => <li><a href={`/${c.slug}`}>{c.heading}</a></li>)}
+          <li><a href="/tools">Calculators &amp; tools</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>About</h4>
+        <ul>
+          <li><a href="/about">About {SITE.name}</a></li>
+          <li><a href="/editorial-policy">Editorial policy</a></li>
+          <li><a href="/authors">Who writes this</a></li>
+          <li><a href="/contact">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Legal</h4>
+        <ul>
+          <li><a href="/privacy">Privacy policy</a></li>
+          <li><a href="/disclaimer">Disclaimer</a></li>
+          <li><a href="/affiliate-disclosure">Affiliate disclosure</a></li>
+          <li><a href="/rss.xml">RSS</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="legal">
+      <span>&copy; {year} {SITE.name}. Independent. Not affiliated with any bank or with the RBI.</span>
+      <span>Information, not financial advice. Verify against the current RBI circular before acting.</span>
+    </div>
+  </div>
+</footer>

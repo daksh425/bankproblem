@@ -1,0 +1,14 @@
+---
+import { CATEGORIES } from '@/config';
+interface Props { counts: Record<string, number>; active?: string }
+const { counts, active } = Astro.props;
+---
+<nav class="chips nav-scroll" aria-label="Filter by topic">
+  <a href="/blog" class={active ? undefined : 'on'}>All</a>
+  {CATEGORIES.map((c) => (
+    <a href={`/${c.slug}`} class={active === c.slug ? 'on' : undefined}>
+      {c.name}
+      <span class="n num">{counts[c.slug] ?? 0}</span>
+    </a>
+  ))}
+</nav>

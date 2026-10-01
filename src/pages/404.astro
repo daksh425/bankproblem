@@ -1,0 +1,17 @@
+---
+import Base from '@/layouts/Base.astro';
+import { CATEGORIES } from '@/config';
+---
+<Base title="Page not found" description="That page does not exist." path="/404" noindex>
+  <div class="shell" style="padding-block:4rem 5rem;max-width:44rem">
+    <h1>That page is not here</h1>
+    <p class="muted" style="margin-top:.8rem;font-size:1.05rem">
+      It may have been renamed. Pick the topic closest to your problem:
+    </p>
+    <ul class="plist" style="margin-top:1.5rem">
+      {CATEGORIES.map((c) => (
+        <li><a href={`/${c.slug}`}><span class="t">{c.heading}</span><span class="d">{c.blurb}</span></a></li>
+      ))}
+    </ul>
+  </div>
+</Base>

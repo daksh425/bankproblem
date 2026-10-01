@@ -1,0 +1,117 @@
+---
+type: guide
+title: "UPI payment failed but money was debited: the ₹100 a day your bank owes you"
+seoTitle: "UPI failed, money debited: refund timeline"
+description: "A failed UPI transfer must auto-reverse by the next calendar day. Past that, RBI requires the bank to pay you ₹100 for every day of delay — without you asking."
+category: payments
+question: "My UPI payment failed but the money was debited. When will I get it back?"
+answer: "A failed UPI transfer where your account was debited but the payee was not credited must be auto-reversed by T+1, the day after the transaction. If the reversal is late, the bank owes you ₹100 for every day of delay beyond that deadline, paid automatically without you having to claim it."
+published: 2026-10-01
+updated: 2026-10-01
+reviewed: 2026-10-01
+author: editor
+affiliate: false
+volume: 18100
+related:
+  - unauthorised-transaction-bank-refund
+  - rbi-ombudsman-how-to-file
+sources:
+  - label: "Harmonisation of Turn Around Time (TAT) and customer compensation for failed transactions (DPSS.CO.PD No.629/02.01.014/2019-20)"
+    url: "https://www.rbi.org.in/Scripts/NotificationUser.aspx?Id=11693"
+    issuer: "Reserve Bank of India"
+    dated: 2019-09-20
+  - label: "UPI dispute redressal mechanism"
+    url: "https://www.npci.org.in/what-we-do/upi/dispute-redressal-mechanism"
+    issuer: "NPCI"
+faqs:
+  - q: "Do I have to ask for the ₹100 a day?"
+    a: "No. The circular makes the compensation automatic — the bank must credit it to your account without any claim from you. In practice many banks do not, which is precisely why it is worth citing when you complain."
+  - q: "What if I sent money to the wrong UPI ID?"
+    a: "This is a different problem and the TAT rules do not apply. The transaction succeeded; it simply went where you told it to go. Your route is to raise a complaint in the app, then with your bank, and ultimately to ask the receiving bank to approach the recipient for consent to reverse. There is no mechanism to force an unwilling recipient to return it."
+  - q: "My payment shows 'pending', not 'failed'. What now?"
+    a: "Pending transactions settle or reverse on their own, usually within the same T+1 window. Do not repeat the payment while one is pending — that is how people end up paying twice."
+  - q: "Does this apply to IMPS and NEFT too?"
+    a: "Yes, with the same T+1 deadline and the same ₹100 per day. Card transactions and ATM withdrawals get a longer window, T+5 days, with the same daily compensation after that."
+---
+
+import Callout from '@/components/Callout.astro';
+
+Nearly every page on this subject tells you to wait three to five working days
+and contact your bank. That advice is both vague and worse than the rule you are
+actually entitled to.
+
+## The deadline
+
+<Callout type="rule" title="T+1, then ₹100 a day" cite="RBI circular DPSS.CO.PD No.629/02.01.014/2019-20" citeUrl="https://www.rbi.org.in/Scripts/NotificationUser.aspx?Id=11693">
+For a UPI transfer where your **account was debited but the beneficiary was not
+credited**, the amount must be auto-reversed by **T+1**, where T is the
+transaction date. Beyond that, the bank must pay you **₹100 per day of delay**,
+credited automatically, with no claim required from you.
+</Callout>
+
+T+1 means the day after the transaction, not one working day. A failed transfer
+on Saturday is due back by Sunday.
+
+The same circular sets deadlines across every failure type:
+
+<div class="tablewrap">
+
+| What failed | Reversal deadline | Compensation after |
+| --- | --- | --- |
+| UPI transfer, account debited, payee not credited | T+1 | ₹100 per day |
+| IMPS or NEFT, account debited, beneficiary not credited | T+1 | ₹100 per day |
+| ATM withdrawal, cash not dispensed | T+5 days | ₹100 per day |
+| Card transaction at a merchant, no confirmation | T+5 days | ₹100 per day |
+| Card-not-present, account debited, no confirmation | T+5 days | ₹100 per day |
+
+</div>
+
+## Why your bank says five working days
+
+Because a genuinely failed transaction and a slow one look identical to you for
+the first day. The call centre quotes the worst case to buy time.
+
+What it does not tell you is that the compensation clock has already started. If
+your money comes back on day four, the bank owes you ₹300 on top of it.
+
+<Callout type="warn" title="Do not repeat the payment">
+A pending UPI transaction may still settle. Paying again often means paying
+twice, and recovering the second one is a far harder problem than waiting out
+the first. Check the status in the app before you retry.
+</Callout>
+
+## What to do
+
+If T+1 has passed and the money is not back, the complaint must be raised in the
+right place to be useful.
+
+1. **Raise it in the UPI app first.** Every UPI app has a built-in complaint flow
+   against the specific transaction. This routes it into NPCI's dispute system
+   rather than a general support queue. Note the reference number.
+2. **Then your bank, in writing.** Email the grievance channel with the UPI
+   transaction reference, the date, the amount, and the line that matters: that
+   under circular DPSS.CO.PD No.629/02.01.014/2019-20 the reversal deadline was
+   T+1 and compensation of ₹100 per day is now due.
+3. **Thirty days later, the Ombudsman.** Free, online, no lawyer.
+   [How to file](/disputes/rbi-ombudsman-how-to-file).
+
+Citing the circular number changes the conversation. A generic complaint about a
+delayed refund gets a templated reply. A complaint quoting the instrument the
+bank is bound by gets routed to someone who knows what it is.
+
+## When it is not a failed transaction
+
+Two cases fall outside these rules entirely, and it is worth being clear about
+them because the remedy is completely different.
+
+**You paid the wrong person.** The transaction worked. There is a process to ask
+the recipient's bank to seek their consent for a reversal, but no mechanism
+compels an unwilling recipient to return the money. Act within 24 hours, raise it
+in the app and with both banks, and understand that the outcome depends on
+someone else's goodwill.
+
+**The money left without you initiating anything.** That is an unauthorised
+transaction, not a failed one, and the rules are far more favourable to you —
+often zero liability.
+[That is a different page](/fraud/unauthorised-transaction-bank-refund), and the
+reporting deadline there is three working days.

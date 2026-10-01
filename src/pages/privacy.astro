@@ -1,0 +1,100 @@
+---
+import { SITE } from '@/config';
+import Page from '@/layouts/Page.astro';
+const updated = 'October 2026';
+---
+<Page
+  title="Privacy policy"
+  description={`How ${SITE.name} handles your data, which cookies are set, and how to opt out of personalised advertising.`}
+  path="/privacy"
+  lede={`Last updated ${updated}.`}
+>
+  <aside class="callout warn">
+    <div class="eyebrow">Before you publish</div>
+    <p>
+      Replace <strong>[LEGAL ENTITY NAME]</strong> and <strong>[REGISTERED ADDRESS]</strong> below
+      with your real details, and have this reviewed if you operate at scale. India's Digital
+      Personal Data Protection Act, 2023 applies to you. This template is a starting point, not
+      legal advice.
+    </p>
+  </aside>
+
+  <p>
+    This policy explains what {SITE.name} ("we") collects when you visit {SITE.domain}, why, and
+    what you can do about it. The site is operated by <strong>[LEGAL ENTITY NAME]</strong>,
+    <strong>[REGISTERED ADDRESS]</strong>, India.
+  </p>
+
+  <h2>What we collect</h2>
+  <p>
+    We do not ask you to create an account and we do not collect your name, bank details, account
+    numbers or credit report. Do not send us any of those.
+  </p>
+  <p>Collected automatically when you visit:</p>
+  <ul>
+    <li>Standard server and analytics data: pages viewed, approximate location at city level, referring site, device and browser type, and time of visit.</li>
+    <li>Cookies and similar identifiers set by third parties listed below.</li>
+  </ul>
+  <p>
+    If you email us or use the contact form, we hold what you send us for as long as it takes to
+    answer, and then delete it.
+  </p>
+
+  <h2>Advertising cookies</h2>
+  <p>
+    This site shows advertising. Google, as a third-party vendor, uses cookies to serve ads on this
+    site. Google's use of advertising cookies enables it and its partners to serve ads based on
+    your visit to this and other sites.
+  </p>
+  <ul>
+    <li>
+      You can opt out of personalised advertising at
+      <a href="https://www.google.com/settings/ads" rel="nofollow noopener" target="_blank">Google Ads Settings</a>.
+    </li>
+    <li>
+      You can opt out of other third-party vendors' cookies at
+      <a href="https://optout.aboutads.info/" rel="nofollow noopener" target="_blank">aboutads.info</a>.
+    </li>
+    <li>
+      Google's own terms are in the
+      <a href="https://policies.google.com/technologies/partner-sites" rel="nofollow noopener" target="_blank">Google Privacy &amp; Terms</a>.
+    </li>
+  </ul>
+  <p>
+    Third-party ad networks may also place cookies. We do not control those cookies and cannot
+    switch them off on your behalf.
+  </p>
+
+  <h2>Analytics</h2>
+  <p>
+    We use Google Analytics to understand which pages are useful. It sets cookies and records the
+    data listed above. IP addresses are anonymised. You can block it with the
+    <a href="https://tools.google.com/dlpage/gaoptout" rel="nofollow noopener" target="_blank">Google Analytics opt-out add-on</a>.
+  </p>
+
+  <h2>Affiliate links</h2>
+  <p>
+    Some outbound links are affiliate links. Following one may let the destination set a cookie that
+    tells them we referred you. We receive a commission on some products; we do not receive your
+    personal data from them. See the <a href="/affiliate-disclosure">affiliate disclosure</a>.
+  </p>
+
+  <h2>Your rights</h2>
+  <p>
+    Under the Digital Personal Data Protection Act, 2023, you may ask what personal data we hold
+    about you, ask us to correct or erase it, and withdraw consent. Because we hold almost nothing,
+    most requests are answered quickly. Write to <a href={`mailto:${SITE.email}`}>{SITE.email}</a>.
+  </p>
+  <p>
+    If you are in the EEA or UK, the GDPR gives you equivalent rights, including the right to
+    complain to your local supervisory authority.
+  </p>
+
+  <h2>Children</h2>
+  <p>This site is not directed at children under 18 and we do not knowingly collect their data.</p>
+
+  <h2>Changes</h2>
+  <p>
+    Material changes to this policy will be noted here with a new "last updated" date.
+  </p>
+</Page>

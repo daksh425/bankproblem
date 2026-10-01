@@ -1,0 +1,77 @@
+---
+import type { GetStaticPaths } from 'astro';
+import { getCollection, render } from 'astro:content';
+import { SITE } from '@/config';
+import Base from '@/layouts/Base.astro';
+import Breadcrumbs from '@/components/Breadcrumbs.astro';
+import ProblemList from '@/components/ProblemList.astro';
+import { getProblems } from '@/lib/content';
+
+export const getStaticPaths = (async () => {
+  const authors = await getCollection('authors');
+  return authors.map((entry) => ({ params: { id: entry.id }, props: { entry } }));
+}) satisfies GetStaticPaths;
+
+const { entry } = Astro.props;
+const a = entry.data;
+const path = `/authors/${entry.id}`;
+const { Content } = await render(entry);
+
+const all = await getProblems();
+const written = all.filter((p) => p.data.author.id === entry.id);
+const reviewed = all.filter((p) => p.data.reviewer?.id === entry.id);
+
+const schema = [
+  {
+    '@type': 'ProfilePage',
+    mainEntity: {
+      '@type': 'Person',
+      '@id': new URL(path, SITE.url).href + '#person',
+      name: a.name,
+      jobTitle: a.role,
+      description: a.bio,
+      url: new URL(path, SITE.url).href,
+      knowsAbout: ['Indian retail banking', 'RBI regulations', 'Credit reporting'],
+      ...(a.links.length ? { sameAs: a.links.map((l) => l.url) } : {}),
+      ...(a.credentials.length ? { hasCredential: a.credentials } : {}),
+    },
+  },
+];
+---
+<Base title={a.name} description={`${a.role}. ${a.bio}`} path={path} schema={schema}>
+  <div class="shell" style="padding-block:1.25rem 3.5rem">
+    <Breadcrumbs items={[{ label: 'Who writes this', href: '/authors' }, { label: a.name }]} />
+    <header class="stack" style="gap:.7rem;margin:1.5rem 0 2rem;max-width:46rem">
+      <h1>{a.name}</h1>
+      <p class="eyebrow">{a.role}</p>
+      <p class="muted" style="font-size:1.05rem">{a.bio}</p>
+      {a.credentials.length > 0 && (
+        <ul style="list-style:none;padding:0;display:flex;gap:.4rem;flex-wrap:wrap">
+          {a.credentials.map((c) => <li class="pill">{c}</li>)}
+        </ul>
+      )}
+      {a.links.length > 0 && (
+        <p class="small">
+          {a.links.map((l, i) => (
+            <>{i > 0 && <span class="muted"> · </span>}<a href={l.url} rel="me noopener" target="_blank">{l.label}</a></>
+          ))}
+        </p>
+      )}
+    </header>
+
+    <div class="prose" style="margin-bottom:2.5rem"><Content /></div>
+
+    {written.length > 0 && (
+      <section class="stack" style="gap:.9rem;margin-bottom:2.5rem">
+        <h2>Written by {a.name}</h2>
+        <ProblemList items={written} />
+      </section>
+    )}
+    {reviewed.length > 0 && (
+      <section class="stack" style="gap:.9rem">
+        <h2>Reviewed by {a.name}</h2>
+        <ProblemList items={reviewed} />
+      </section>
+    )}
+  </div>
+</Base>

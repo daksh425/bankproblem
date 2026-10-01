@@ -1,0 +1,60 @@
+---
+import { SITE } from '@/config';
+import Page from '@/layouts/Page.astro';
+---
+<Page
+  title="Editorial policy"
+  description="How pages here are researched, sourced, reviewed and corrected, and what separates editorial content from advertising."
+  path="/editorial-policy"
+  lede="The rules we hold ourselves to. Published so you can hold us to them too."
+>
+  <h2>Sourcing</h2>
+  <p>
+    Every factual claim about a rule, a timeline or a liability limit must trace to a primary
+    source — an RBI circular or master direction, an NPCI guideline, a statutory instrument, or the
+    published policy of the institution concerned. Those sources are listed on every page with the
+    issuing body and the date.
+  </p>
+  <p>
+    News reports and other blogs are not sources. They may point us at something, but the citation
+    is always to the original document.
+  </p>
+
+  <h2>Review and dating</h2>
+  <ul>
+    <li>Every page carries a named author. Nothing is published anonymously.</li>
+    <li>Pages that state rules, timelines or compensation amounts carry a <strong>rules checked</strong> date, which is the last time a human opened the cited circular and confirmed it still says what we say it says.</li>
+    <li>Pages touching tax or regulated advice are reviewed by someone qualified before publication.</li>
+    <li>Rules-checked dates are refreshed at least every six months, and immediately when a relevant circular changes.</li>
+  </ul>
+
+  <h2>Corrections</h2>
+  <p>
+    Substantive errors are corrected in place with a visible note. We do not silently edit a page to
+    hide that it was wrong. Typos and clarifications are fixed without a note.
+  </p>
+
+  <h2>Advertising and affiliate links</h2>
+  <ul>
+    <li>Advertising is clearly labelled and sold through ad networks. Advertisers do not see articles before publication and cannot request changes.</li>
+    <li>Affiliate relationships are disclosed at the top of any page that contains an affiliate link, above the content.</li>
+    <li>A product is never recommended because it pays a commission. If the best option for a reader pays us nothing, that is the one named.</li>
+    <li>No page is written to order for a brand, and we do not publish sponsored posts.</li>
+  </ul>
+
+  <h2>AI use</h2>
+  <p>
+    Drafting tools may be used for structure and editing. No page is published that a named human
+    has not verified line by line against the cited sources. We do not publish generated text that
+    nobody has checked, because on this subject a confident wrong answer costs the reader money.
+  </p>
+
+  <h2>What we will not do</h2>
+  <ul>
+    <li>Publish a page on a problem we cannot answer, in order to capture the search.</li>
+    <li>Pad a short answer to look more thorough.</li>
+    <li>Claim certainty where banks genuinely differ in practice.</li>
+  </ul>
+
+  <p>Questions about any of this: <a href="/contact">contact {SITE.name}</a>.</p>
+</Page>

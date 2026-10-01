@@ -1,0 +1,79 @@
+---
+import { paletteFor, wrap, hash } from '@/lib/cover';
+import { CATEGORY_MAP, type CategorySlug } from '@/config';
+
+interface Props {
+  title: string;
+  slug: string;
+  category: CategorySlug;
+  /** card = compact, used in listings. hero = full width on the article page. */
+  variant?: 'hero' | 'card';
+}
+const { title, slug, category, variant = 'hero' } = Astro.props;
+
+const p = paletteFor(slug);
+const cat = CATEGORY_MAP[category];
+const h = hash(slug);
+
+const lines = variant === 'hero' ? wrap(title, 30, 4) : wrap(title, 26, 3);
+const fs = variant === 'hero' ? 50 : 54;
+const lh = fs * 1.16;
+const startY = 300 - ((lines.length - 1) * lh) / 2 + fs * 0.34;
+
+// Scatter a few coins. Deterministic, so a post's cover never changes.
+const coins = Array.from({ length: 7 }, (_, i) => {
+  const s = hash(slug + i);
+  return {
+    cx: 620 + ((s % 1000) / 1000) * 330,
+    cy: 60 + (((s >> 7) % 1000) / 1000) * 480,
+    r: 12 + (((s >> 13) % 100) / 100) * 30,
+    o: 0.07 + (((s >> 19) % 100) / 100) * 0.16,
+  };
+});
+const gid = `cv-${h.toString(36)}`;
+---
+<svg
+  class={`cover cover-${variant}`}
+  viewBox="0 0 1000 600"
+  role="img"
+  aria-label={title}
+  preserveAspectRatio="xMidYMid slice"
+>
+  <defs>
+    <linearGradient id={gid} x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color={p.from} />
+      <stop offset="1" stop-color={p.to} />
+    </linearGradient>
+  </defs>
+
+  <rect width="1000" height="600" fill={`url(#${gid})`} />
+  {coins.map((c) => (
+    <circle cx={c.cx} cy={c.cy} r={c.r} fill={p.dot} opacity={c.o} />
+  ))}
+  <circle cx="860" cy="470" r="190" fill={p.dot} opacity="0.1" />
+  <rect x="0" y="0" width="7" height="600" fill={p.dot} opacity="0.65" />
+
+  <text
+    x="70" y="148"
+    fill={p.dot}
+    font-family="Archivo, system-ui, sans-serif"
+    font-size="22" font-weight="600" letter-spacing="3.2"
+  >{cat.name.toUpperCase()}</text>
+
+  {lines.map((l, i) => (
+    <text
+      x="70" y={startY + i * lh}
+      fill={p.ink}
+      font-family="Archivo, system-ui, sans-serif"
+      font-size={fs} font-weight="700" letter-spacing="-0.8"
+    >{l}</text>
+  ))}
+
+  <rect x="70" y="470" width="56" height="4" rx="2" fill={p.dot} opacity="0.9" />
+</svg>
+
+<style>
+  .cover { display: block; width: 100%; height: auto; background: var(--surface-2); }
+  .cover-hero { border-radius: var(--radius); aspect-ratio: 5 / 3; }
+  .cover-card { aspect-ratio: 16 / 9; }
+</style>

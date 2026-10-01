@@ -1,0 +1,48 @@
+---
+import Base from '@/layouts/Base.astro';
+import Breadcrumbs from '@/components/Breadcrumbs.astro';
+import AdSlot from '@/components/AdSlot.astro';
+
+const tools = [
+  {
+    href: '/tools/bank-compensation-calculator',
+    name: 'What your bank owes you',
+    blurb:
+      'Failed transfer, ATM cash not dispensed, card closure ignored, credit report dispute left open. Works out the compensation RBI requires, and names the circular.',
+    tag: 'Flagship',
+  },
+  {
+    href: '/tools/credit-utilisation-calculator',
+    name: 'Credit utilisation calculator',
+    blurb:
+      'The ratio lenders actually look at, per card and overall, with the thresholds where it starts to cost you.',
+    tag: null,
+  },
+];
+---
+<Base
+  title="Calculators & tools"
+  description="Small tools that answer a banking question properly: compensation owed under RBI turn-around-time rules, and credit utilisation."
+  path="/tools"
+>
+  <div class="shell" style="padding-block:1.25rem 3.5rem">
+    <Breadcrumbs items={[{ label: 'Tools' }]} />
+    <header class="stack" style="gap:.8rem;margin:1.5rem 0 2rem;max-width:46rem">
+      <h1>Calculators &amp; tools</h1>
+      <p class="muted" style="font-size:1.08rem">
+        Not another EMI calculator. These answer questions specific to a banking problem, where the
+        arithmetic is in a circular nobody reads.
+      </p>
+    </header>
+    <div class="grid two">
+      {tools.map((t) => (
+        <a class="cell" href={t.href}>
+          {t.tag && <span class="pill" style="align-self:start">{t.tag}</span>}
+          <h3>{t.name}</h3>
+          <p>{t.blurb}</p>
+        </a>
+      ))}
+    </div>
+    <AdSlot slot="" label="tools foot" />
+  </div>
+</Base>

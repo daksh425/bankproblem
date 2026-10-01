@@ -1,0 +1,73 @@
+---
+import type { GetStaticPaths } from 'astro';
+import { CATEGORIES, SITE, type Category } from '@/config';
+import Base from '@/layouts/Base.astro';
+import Breadcrumbs from '@/components/Breadcrumbs.astro';
+import PostCard from '@/components/PostCard.astro';
+import Chips from '@/components/Chips.astro';
+import Pager from '@/components/Pager.astro';
+import AdSlot from '@/components/AdSlot.astro';
+import { getProblemsByCategory, getCategoryCounts } from '@/lib/content';
+import { slicePage } from '@/lib/paginate';
+
+export const getStaticPaths = (() =>
+  CATEGORIES.map((c) => ({ params: { category: c.slug }, props: { cat: c } }))) satisfies GetStaticPaths;
+
+const { cat } = Astro.props as { cat: Category };
+const all = await getProblemsByCategory(cat.slug);
+const counts = await getCategoryCounts();
+const p = slicePage(all, 1);
+const path = `/${cat.slug}`;
+
+const schema = [
+  {
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: SITE.url },
+      { '@type': 'ListItem', position: 2, name: 'Blog', item: new URL('/blog', SITE.url).href },
+      { '@type': 'ListItem', position: 3, name: cat.name, item: new URL(path, SITE.url).href },
+    ],
+  },
+  {
+    '@type': 'CollectionPage',
+    name: cat.heading,
+    description: cat.blurb,
+    url: new URL(path, SITE.url).href,
+    isPartOf: { '@id': `${SITE.url}/#website` },
+  },
+];
+---
+<Base title={cat.heading} description={cat.blurb} path={path} schema={schema}>
+  <div class="shell" style="padding-block:1.5rem 3.5rem">
+    <Breadcrumbs items={[{ label: 'Blog', href: '/blog' }, { label: cat.name }]} />
+    <header class="stack" style="gap:.9rem;margin:1.5rem 0 2rem;max-width:48rem">
+      <h1>{cat.heading}</h1>
+      <p class="muted" style="font-size:1.08rem">{cat.blurb}</p>
+    </header>
+
+    <Chips counts={counts} active={cat.slug} />
+
+    {p.total > 0 ? (
+      <>
+        <div class="listhead" style="margin-top:1.75rem">
+          <h2 class="vh">Posts in {cat.name}</h2>
+          <p class="small muted num">Showing {p.start + 1}–{p.end} of {p.total}</p>
+        </div>
+        <div class="pgrid" style="margin-top:.75rem">
+          {p.items.map((post) => <PostCard post={post} />)}
+        </div>
+        <Pager current={p.current} last={p.last} base={path} pattern={`${path}/page/{n}`} />
+      </>
+    ) : (
+      <div class="callout warn" style="margin-top:1.75rem">
+        <div class="eyebrow">Nothing here yet</div>
+        <p>
+          We have not published in this section yet. See <a href="/blog">the latest posts</a>, or
+          <a href="/contact"> tell us what you are stuck on</a> and we will write it.
+        </p>
+      </div>
+    )}
+
+    <AdSlot slot="" label="category foot" />
+  </div>
+</Base>

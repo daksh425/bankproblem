@@ -1,0 +1,89 @@
+---
+import { SITE, CATEGORIES } from '@/config';
+import Base from '@/layouts/Base.astro';
+import PostCard from '@/components/PostCard.astro';
+import Chips from '@/components/Chips.astro';
+import AdSlot from '@/components/AdSlot.astro';
+import { getProblems, getCategoryCounts } from '@/lib/content';
+
+const posts = await getProblems();
+const counts = await getCategoryCounts();
+const featured = posts[0];
+const recent = posts.slice(1, 7);
+const guides = posts.filter((p) => p.data.type === 'guide').slice(0, 3);
+---
+<Base title={SITE.name} description={SITE.description} path="/">
+  <div class="shell">
+    <section class="hero">
+      <p class="eyebrow">Independent · sourced to RBI rules</p>
+      <h1>Your bank is wrong more often than you think.</h1>
+      <p>
+        {SITE.name} explains what the rules actually say when a card is rejected, a transfer
+        fails, money leaves your account without permission, or a bank simply stops replying —
+        and exactly what to do next.
+      </p>
+      <div class="btn-row" style="margin-top:.4rem">
+        <a class="btn" href="/blog">Read the blog</a>
+        <a class="btn ghost" href="/tools/bank-compensation-calculator">What your bank owes you</a>
+      </div>
+    </section>
+
+    {featured && (
+      <section style="margin-bottom:3rem">
+        <div class="listhead"><h2>Latest</h2><a class="small" href="/blog">All posts &rarr;</a></div>
+        <PostCard post={featured} featured />
+      </section>
+    )}
+
+    <section class="stack" style="gap:1.1rem;margin-bottom:3rem">
+      <div class="listhead"><h2>Browse by problem</h2></div>
+      <Chips counts={counts} />
+    </section>
+
+    {recent.length > 0 && (
+      <section class="stack" style="gap:1.1rem;margin-bottom:3rem">
+        <div class="listhead"><h2>Recent posts</h2></div>
+        <div class="pgrid">{recent.map((p) => <PostCard post={p} />)}</div>
+      </section>
+    )}
+
+    <AdSlot slot="" label="home mid" />
+
+    {guides.length > 0 && (
+      <section class="stack" style="gap:1.1rem;margin-bottom:3rem">
+        <div class="listhead">
+          <h2>The guides</h2>
+          <p class="small muted">Evergreen rule pages. Every one cites the circular it relies on.</p>
+        </div>
+        <div class="pgrid">{guides.map((p) => <PostCard post={p} />)}</div>
+      </section>
+    )}
+
+    <section class="stack" style="gap:1.1rem;margin-bottom:1rem">
+      <div class="listhead"><h2>Why trust this</h2></div>
+      <div class="grid three">
+        <div class="cell">
+          <h3>Every claim is cited</h3>
+          <p>
+            Guides list the RBI circular, master direction or NPCI rule they rely on, with the
+            date. The build will not compile a guide that has no primary source.
+          </p>
+        </div>
+        <div class="cell">
+          <h3>Named, checkable authors</h3>
+          <p>
+            Nothing is published anonymously. Every page carries a byline and the date the rules
+            were last verified against the source.
+          </p>
+        </div>
+        <div class="cell">
+          <h3>We say when you are stuck</h3>
+          <p>
+            Some problems have no clean fix. We tell you that, and point you at the RBI Ombudsman
+            instead of padding the page.
+          </p>
+        </div>
+      </div>
+    </section>
+  </div>
+</Base>

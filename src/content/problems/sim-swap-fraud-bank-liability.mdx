@@ -1,0 +1,81 @@
+---
+type: post
+title: "SIM swap fraud: the bank will blame you, and here is why it is wrong"
+seoTitle: "SIM swap fraud and bank liability"
+description: "Your number is ported, the OTPs go elsewhere, the account empties. Banks call this customer negligence. Under the RBI circular it usually is not."
+category: fraud
+question: "My SIM was swapped and money was taken. Is the bank liable?"
+published: 2026-10-27
+author: editor
+volume: 2900
+tags: ["SIM swap", "fraud", "OTP"]
+related:
+  - unauthorised-transaction-bank-refund
+  - bank-blamed-negligence-burden-of-proof
+  - rbi-ombudsman-how-to-file
+faqs:
+  - q: "I never shared my OTP. Why is the bank saying I was negligent?"
+    a: "Because an OTP was correctly entered, and the bank's system cannot tell who entered it. That is an assertion about its own logs, not proof of your conduct, and the circular puts the burden of proving negligence on the bank."
+  - q: "What is the first sign of a SIM swap?"
+    a: "Your phone loses network and stays without signal for an unusually long time, often overnight or during a weekend when you are less likely to act. Treat a sudden prolonged loss of service as urgent, not as a coverage problem."
+---
+
+import Callout from '@/components/Callout.astro';
+
+The pattern is consistent. Your phone loses signal. You assume it is the network.
+By the time you reach the operator, your number is on someone else's SIM, every
+OTP has gone to them, and the account is empty.
+
+The bank's first response is that an OTP was correctly entered, so you must have
+shared it.
+
+## Why that answer does not hold
+
+<Callout type="rule" title="The bank has to prove negligence, not assert it" cite="RBI circular DBR.No.Leg.BC.78/09.07.005/2017-18, 6 July 2017" citeUrl="https://www.rbi.org.in/Scripts/NotificationUser.aspx?Id=11040">
+Under the circular on limiting customer liability, the **burden of proving
+customer liability in an unauthorised electronic transaction rests with the bank**.
+Where the loss arises from a third party breach and the fault lies with neither
+you nor the bank, and you reported within **three working days**, your liability
+is **zero**.
+</Callout>
+
+In a SIM swap the credential was intercepted, not shared. The fact that a valid
+OTP reached the attacker is evidence that the delivery channel was compromised,
+not evidence of anything you did. A bank that treats "the OTP was entered" as
+proof of negligence is asserting its conclusion rather than proving it.
+
+## What to do, in order, and fast
+
+The three-working-day window is what decides the money.
+
+1. **Call the bank's 24x7 helpline immediately** and get a complaint reference. Do not wait until you have restored the SIM. Reporting is what stops further loss and starts the clock in your favour.
+2. **Block the cards and net banking** in the same call.
+3. **Report at cybercrime.gov.in or on 1930.** For many fraud types this triggers a freeze at the beneficiary end, which is the only realistic route to actually recovering the money.
+4. **Contact the telecom operator** and get the SIM swap documented — when it was requested, through which channel, and on what identification. This is the evidence that there was a third-party breach.
+5. **Put it all in writing to the bank the same day**, with the timeline.
+
+## The evidence that wins it
+
+Ask the telecom operator in writing for the record of the SIM replacement: the
+date and time, the point of sale or channel, and the documents accepted. If the
+swap was done on forged or thin identification, that is a third-party breach
+documented by a third party, and it is very hard for the bank to characterise as
+your negligence.
+
+Pair that with your reporting timestamp and the liability position is clear.
+
+## The 10-working-day credit
+
+Separately from who is ultimately liable, the bank must **credit the disputed
+amount within 10 working days of your notification**, with the investigation
+continuing afterwards. Being told to wait for the investigation to finish is the
+bank describing its convenience.
+[The full rules, the liability bands and the deadlines](/fraud/unauthorised-transaction-bank-refund).
+
+## If the bank still refuses
+
+Ask for the refusal in writing with the specific ground. Then, 30 days after your
+complaint, file with the Ombudsman. State clearly that the bank has asserted
+negligence without discharging the burden the circular places on it.
+[How to file](/disputes/rbi-ombudsman-how-to-file) ·
+[What "the bank must prove it" means in practice](/fraud/bank-blamed-negligence-burden-of-proof).

@@ -1,0 +1,55 @@
+---
+import { SITE } from '@/config';
+import Page from '@/layouts/Page.astro';
+---
+<Page
+  title="Contact"
+  description={`Report an error, suggest a problem to cover, or reach the editor of ${SITE.name}.`}
+  path="/contact"
+  lede="Corrections get priority. We would rather be right than look right."
+>
+  <aside class="callout alert">
+    <div class="eyebrow">Never send us these</div>
+    <p>
+      Do not send account numbers, card numbers, CVV, PIN, OTP, passwords, or photographs of
+      statements and cheques. We do not need them, we cannot act on your account, and nobody
+      legitimate will ask you for them. If someone claiming to be from this site asks, it is fraud.
+    </p>
+  </aside>
+
+  <h2>Email</h2>
+  <p>
+    <a href={`mailto:${SITE.email}`}>{SITE.email}</a> reaches the editor. We read everything and
+    reply to most things within a few working days.
+  </p>
+
+  <h2>Reporting an error</h2>
+  <p>
+    Include the page URL and, if you can, the circular or document that says otherwise. Substantive
+    corrections are made with a visible note on the page, as set out in the
+    <a href="/editorial-policy">editorial policy</a>.
+  </p>
+
+  <h2>Suggesting a topic</h2>
+  <p>
+    Tell us what went wrong, what you tried, and where you got stuck. Specific, awkward problems are
+    the most useful — those are the ones nobody has written up properly.
+  </p>
+
+  <h2>What we cannot do</h2>
+  <ul>
+    <li>Contact your bank for you, or escalate a complaint on your behalf.</li>
+    <li>Tell you which product to buy for your personal situation.</li>
+    <li>Recover money, reverse a transaction, or influence a bank's decision.</li>
+  </ul>
+  <p>
+    For those, the route is your bank's grievance redressal officer and then the RBI Ombudsman.
+    <a href="/disputes"> We explain how that ladder works</a>.
+  </p>
+
+  <h2>Press and partnerships</h2>
+  <p>
+    Same address. We do not publish sponsored posts or sell links — see the
+    <a href="/editorial-policy">editorial policy</a>.
+  </p>
+</Page>

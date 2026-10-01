@@ -1,0 +1,224 @@
+---
+import { SITE } from '@/config';
+import Base from '@/layouts/Base.astro';
+import Breadcrumbs from '@/components/Breadcrumbs.astro';
+import AdSlot from '@/components/AdSlot.astro';
+
+const path = '/tools/bank-compensation-calculator';
+const title = 'What your bank owes you: RBI compensation calculator';
+const description =
+  'Work out the compensation RBI requires your bank to pay for a failed transaction, an ignored card closure or an unresolved credit report dispute.';
+
+const RULES = [
+  { id: 'upi', label: 'UPI transfer failed, account debited, payee not credited', deadline: '1 calendar day (T+1)', rate: '₹100 per day', cite: 'DPSS.CO.PD No.629/02.01.014/2019-20' },
+  { id: 'imps', label: 'IMPS or NEFT failed, account debited, beneficiary not credited', deadline: '1 calendar day (T+1)', rate: '₹100 per day', cite: 'DPSS.CO.PD No.629/02.01.014/2019-20' },
+  { id: 'atm', label: 'ATM withdrawal, cash not dispensed, account debited', deadline: '5 calendar days (T+5)', rate: '₹100 per day', cite: 'DPSS.CO.PD No.629/02.01.014/2019-20' },
+  { id: 'card', label: 'Card transaction, account debited, no confirmation to merchant', deadline: '5 calendar days (T+5)', rate: '₹100 per day', cite: 'DPSS.CO.PD No.629/02.01.014/2019-20' },
+  { id: 'closure', label: 'Credit card closure request not completed', deadline: '7 working days', rate: '₹500 per day', cite: 'Master Direction on Credit Card and Debit Card, 2022' },
+  { id: 'bureau', label: 'Credit report dispute not resolved', deadline: '30 calendar days', rate: '₹100 per day', cite: 'RBI framework on delayed updation of credit information' },
+];
+
+const schema = [
+  {
+    '@type': 'WebApplication',
+    name: 'RBI bank compensation calculator',
+    applicationCategory: 'FinanceApplication',
+    operatingSystem: 'Any',
+    url: new URL(path, SITE.url).href,
+    description,
+    offers: { '@type': 'Offer', price: '0', priceCurrency: 'INR' },
+    publisher: { '@id': `${SITE.url}/#org` },
+  },
+];
+---
+<Base title={title} description={description} path={path} schema={schema}>
+  <div class="shell" style="padding-block:1.25rem 3.5rem">
+    <Breadcrumbs items={[{ label: 'Tools', href: '/tools' }, { label: 'What your bank owes you' }]} />
+
+    <header class="stack" style="gap:.8rem;margin:1.5rem 0 2rem;max-width:48rem">
+      <h1>What your bank owes you</h1>
+      <p class="muted" style="font-size:1.08rem">
+        RBI sets a deadline for fixing a failed transaction, closing a card and resolving a credit
+        report dispute. Miss it and the bank owes you a fixed amount for every day of delay,
+        payable without you asking. Most people never claim it because nobody tells them.
+      </p>
+    </header>
+
+    <div class="article-grid">
+      <div class="stack" style="gap:1.75rem">
+        <form id="calc" class="callout" style="gap:1.1rem" novalidate>
+          <div class="eyebrow">Work it out</div>
+
+          <div class="field">
+            <label for="kind">What went wrong</label>
+            <select id="kind" name="kind">
+              {RULES.map((r) => <option value={r.id}>{r.label}</option>)}
+            </select>
+          </div>
+
+          <div class="fieldpair">
+            <div class="field">
+              <label for="start">Date it happened <span class="opt">(or you requested)</span></label>
+              <input type="date" id="start" name="start" required />
+            </div>
+            <div class="field">
+              <label for="end">Date resolved <span class="opt">(blank = still open)</span></label>
+              <input type="date" id="end" name="end" />
+            </div>
+          </div>
+
+          <button type="submit" class="btn">Calculate</button>
+          <p class="small muted" id="hint">Nothing is sent anywhere. The sum runs in your browser.</p>
+        </form>
+
+        <output id="result" for="calc" hidden></output>
+
+        <AdSlot slot="" label="calculator mid" />
+
+        <section class="stack" style="gap:.9rem">
+          <h2>The deadlines in full</h2>
+          <div class="tablewrap">
+            <table>
+              <thead>
+                <tr><th scope="col">What failed</th><th scope="col">Deadline</th><th scope="col">Compensation</th></tr>
+              </thead>
+              <tbody>
+                {RULES.map((r) => (
+                  <tr>
+                    <th scope="row" style="font-weight:500">{r.label}</th>
+                    <td class="n">{r.deadline}</td>
+                    <td class="n">{r.rate}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          <p class="small muted">
+            "T" is the date of the transaction or request. Calendar days include weekends; working
+            days do not. This tool excludes Saturdays and Sundays from working-day counts but cannot
+            know your state's bank holidays, so treat a working-day result as the earliest the
+            deadline could have fallen.
+          </p>
+        </section>
+
+        <section class="stack" style="gap:.9rem">
+          <h2>How to actually claim it</h2>
+          <p class="muted">
+            The compensation is supposed to be automatic. In practice you will have to ask. Write to
+            the bank's grievance redressal officer with three things: the date, the deadline that
+            was missed, and the circular that sets it. Then, 30 days later, escalate free of charge
+            to the RBI Ombudsman.
+          </p>
+          <p>
+            <a href="/disputes/rbi-ombudsman-how-to-file">How to file with the RBI Ombudsman &rarr;</a>
+          </p>
+        </section>
+      </div>
+
+      <aside class="aside">
+        <div class="callout" style="font-size:.86rem">
+          <div class="eyebrow">Read next</div>
+          <ul style="padding-left:1.1rem;display:flex;flex-direction:column;gap:.5rem;margin-top:.3rem">
+            <li><a href="/payments/upi-payment-failed-money-debited">UPI failed but money debited</a></li>
+            <li><a href="/cards/credit-card-closure-not-processed">Bank will not close your card</a></li>
+            <li><a href="/credit-score/credit-report-error-dispute">Credit report error</a></li>
+          </ul>
+        </div>
+        <AdSlot slot="" label="calculator sidebar" />
+      </aside>
+    </div>
+  </div>
+</Base>
+
+
+<script is:inline>
+  (function () {
+    var RULES = {
+      upi:     { days: 1,  unit: 'calendar', rate: 100, cite: 'RBI circular DPSS.CO.PD No.629/02.01.014/2019-20' },
+      imps:    { days: 1,  unit: 'calendar', rate: 100, cite: 'RBI circular DPSS.CO.PD No.629/02.01.014/2019-20' },
+      atm:     { days: 5,  unit: 'calendar', rate: 100, cite: 'RBI circular DPSS.CO.PD No.629/02.01.014/2019-20' },
+      card:    { days: 5,  unit: 'calendar', rate: 100, cite: 'RBI circular DPSS.CO.PD No.629/02.01.014/2019-20' },
+      closure: { days: 7,  unit: 'working',  rate: 500, cite: 'RBI Master Direction on Credit Card and Debit Card, 2022' },
+      bureau:  { days: 30, unit: 'calendar', rate: 100, cite: 'RBI framework on delayed updation of credit information' }
+    };
+    var DAY = 86400000;
+
+    function addCalendar(d, n) { return new Date(d.getTime() + n * DAY); }
+    function addWorking(d, n) {
+      var out = new Date(d.getTime()), added = 0;
+      while (added < n) {
+        out = new Date(out.getTime() + DAY);
+        var wd = out.getDay();
+        if (wd !== 0 && wd !== 6) added++;
+      }
+      return out;
+    }
+    function fmt(d) {
+      return d.toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' });
+    }
+    function rupees(n) {
+      return '₹' + n.toLocaleString('en-IN');
+    }
+
+    var form = document.getElementById('calc');
+    var out = document.getElementById('result');
+    if (!form || !out) return;
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var kind = document.getElementById('kind').value;
+      var startVal = document.getElementById('start').value;
+      var endVal = document.getElementById('end').value;
+      var rule = RULES[kind];
+
+      if (!startVal) {
+        out.hidden = false;
+        out.className = 'callout warn';
+        out.innerHTML = '<div class="eyebrow">Missing date</div><p>Enter the date it happened.</p>';
+        return;
+      }
+
+      var start = new Date(startVal + 'T00:00:00');
+      var end = endVal ? new Date(endVal + 'T00:00:00') : new Date(new Date().toDateString());
+      var openEnded = !endVal;
+
+      if (end < start) {
+        out.hidden = false;
+        out.className = 'callout warn';
+        out.innerHTML = '<div class="eyebrow">Check the dates</div><p>The resolution date is before the date it happened.</p>';
+        return;
+      }
+
+      var due = rule.unit === 'working' ? addWorking(start, rule.days) : addCalendar(start, rule.days);
+      var lateDays = Math.max(0, Math.round((end - due) / DAY));
+      var amount = lateDays * rule.rate;
+
+      if (lateDays === 0) {
+        out.hidden = false;
+        out.className = 'callout ok';
+        out.innerHTML =
+          '<div class="eyebrow">Nothing owed yet</div>' +
+          '<p>The deadline was <strong>' + fmt(due) + '</strong>' +
+          (openEnded ? ', which has not passed yet.' : ', and it was resolved on time.') + '</p>' +
+          '<div class="cite">Deadline set by ' + rule.cite + '</div>';
+        return;
+      }
+
+      out.hidden = false;
+      out.className = 'callout rule';
+      out.innerHTML =
+        '<div class="eyebrow">Compensation owed to you</div>' +
+        '<div class="res">' +
+        '<div class="amount">' + rupees(amount) + '</div>' +
+        '<dl class="kv">' +
+        '<dt>Deadline was</dt><dd>' + fmt(due) + '</dd>' +
+        '<dt>' + (openEnded ? 'Unresolved as of' : 'Resolved on') + '</dt><dd>' + fmt(end) + '</dd>' +
+        '<dt>Days late</dt><dd>' + lateDays + '</dd>' +
+        '<dt>Rate</dt><dd>' + rupees(rule.rate) + ' per day</dd>' +
+        '</dl>' +
+        (openEnded ? '<p class="small muted">Still accruing at ' + rupees(rule.rate) + ' a day until it is fixed.</p>' : '') +
+        '<div class="cite">Under ' + rule.cite + '. Verify against the current circular before quoting it.</div>' +
+        '</div>';
+    });
+  })();
+</script>

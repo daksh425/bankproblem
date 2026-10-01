@@ -1,0 +1,20 @@
+---
+import type { GetStaticPaths } from 'astro';
+import { render } from 'astro:content';
+import Problem from '@/layouts/Problem.astro';
+import { getProblems } from '@/lib/content';
+
+export const getStaticPaths = (async () => {
+  const problems = await getProblems();
+  return problems.map((entry) => ({
+    params: { category: entry.data.category, slug: entry.id },
+    props: { entry },
+  }));
+}) satisfies GetStaticPaths;
+
+const { entry } = Astro.props;
+const { Content, headings } = await render(entry);
+---
+<Problem entry={entry} headings={headings}>
+  <Content />
+</Problem>

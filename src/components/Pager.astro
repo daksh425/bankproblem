@@ -1,0 +1,37 @@
+---
+interface Props {
+  current: number;
+  last: number;
+  /** URL of page 1. */
+  base: string;
+  /** URL template for pages 2+, with {n} replaced by the page number. */
+  pattern: string;
+}
+const { current, last, base, pattern } = Astro.props;
+const href = (n: number) => (n === 1 ? base : pattern.replace('{n}', String(n)));
+
+const nums: (number | 'gap')[] = [];
+for (let i = 1; i <= last; i++) {
+  if (i === 1 || i === last || Math.abs(i - current) <= 1) nums.push(i);
+  else if (nums[nums.length - 1] !== 'gap') nums.push('gap');
+}
+---
+{last > 1 && (
+  <nav class="pager" aria-label="Pagination">
+    {current > 1
+      ? <a class="pg nav" href={href(current - 1)} rel="prev">&larr; Newer</a>
+      : <span class="pg nav off">&larr; Newer</span>}
+
+    <div class="pg-nums">
+      {nums.map((n) =>
+        n === 'gap'
+          ? <span class="pg gap" aria-hidden="true">…</span>
+          : <a class={n === current ? 'pg on num' : 'pg num'} href={href(n)} aria-current={n === current ? 'page' : undefined}>{n}</a>
+      )}
+    </div>
+
+    {current < last
+      ? <a class="pg nav" href={href(current + 1)} rel="next">Older &rarr;</a>
+      : <span class="pg nav off">Older &rarr;</span>}
+  </nav>
+)}
