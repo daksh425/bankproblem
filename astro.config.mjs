@@ -17,7 +17,10 @@ export default defineConfig({
         !/\/page\/\d+\/?$/.test(page),     // /cards/page/2 …
     }),
   ],
-  build: { format: 'file' },
+  // 'directory' emits /blog/index.html rather than /blog.html, which works
+  // unchanged on Apache, Nginx, Cloudflare Pages, Netlify and Vercel. 'file'
+  // relies on the host rewriting extensionless URLs and 404s on plain Apache.
+  build: { format: 'directory' },
   markdown: {
     shikiConfig: { themes: { light: 'github-light', dark: 'github-dark' } },
   },
